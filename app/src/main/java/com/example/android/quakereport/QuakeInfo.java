@@ -10,7 +10,7 @@ public class QuakeInfo {
     private String mPlace;
     private Date mDate;
     private String mUrl;
-    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM DD, yyyy");
+    private final SimpleDateFormat dateFormatter = new SimpleDateFormat("MMM dd, yyyy");
     private final SimpleDateFormat timeFormatter = new SimpleDateFormat("hh:mm a");
 
     public QuakeInfo(String place, double magnitude, Date date, String url) {
