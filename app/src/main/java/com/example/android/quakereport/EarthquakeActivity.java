@@ -40,18 +40,28 @@ public class EarthquakeActivity extends AppCompatActivity implements LoaderManag
         loadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
         addQuakeAdapterToListView();
 
-        if (QueryUtils.isConnectedToNet(this)) {
-            getSupportLoaderManager().initLoader(EARTHQUAKE_LOADER_ID, null, this);
-        }
-        else {
-            loadingIndicator.setVisibility(View.GONE);
-            emptyView.setText("No Internet Connection");
-        }
+        //checkNetAndRestartLoader(); //Because we are calling it onStart
 
         /* No more using AsyncTask
         String url = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2014-01-01&endtime=2014-01-02";
         QuakeAsyncTask task = new QuakeAsyncTask();
         task.execute(url);*/
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkNetAndRestartLoader();
+    }
+
+    private void checkNetAndRestartLoader() {
+        if (QueryUtils.isConnectedToNet(this)) {
+            getSupportLoaderManager().restartLoader(EARTHQUAKE_LOADER_ID, null, this);
+        }
+        else {
+            loadingIndicator.setVisibility(View.GONE);
+            emptyView.setText("No Internet Connection");
+        }
     }
 
     // Changed Updateui(quakesInfo) to this function.
